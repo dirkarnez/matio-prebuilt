@@ -113,7 +113,7 @@ jobs:
             -DMATIO_SHARED=OFF ^
             -DMATIO_WITH_HDF5=OFF ^
             -DMATIO_WITH_ZLIB=OFF ^
-            -DMAT73=OFF ^
+            -DMATIO_MAT73=OFF ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
             cd cmake-build && ( cmake --build . --config Release && cmake --install .  || type .\CMakeFiles\CMakeError.log )  
  
