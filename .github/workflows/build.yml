@@ -31,7 +31,6 @@ jobs:
       cmakeInstallationPath: matio-installation
       tagName: v1.5.26
     steps:
-    
       - uses: actions/checkout@v4
         with:
           repository: tbeu/matio
@@ -85,13 +84,14 @@ jobs:
       #       -DBUILD_SHARED_LIBS=OFF ^
       #       -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
       #       cd cmake-build && cmake --build . --config Release && cmake --install . 
+      
       - shell: cmd
-       run: |
-         cd ${{ env.libraryName }} &&^
-         dir &&^
-         "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/include(cmake\/tools.cmake)//g" CMakeLists.txt &&^
-         "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/include(cmake\/test.cmake)//g" CMakeLists.txt &&^
-         type CMakeLists.txt
+        run: |
+          cd ${{ env.libraryName }} &&^
+          dir &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/include(cmake\/tools.cmake)//g" CMakeLists.txt &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/include(cmake\/test.cmake)//g" CMakeLists.txt &&^
+          type CMakeLists.txt
          
       - name: set PATH, check mingw version, cmake generate, build and install
         if: ${{ matrix.compiler.url }}
