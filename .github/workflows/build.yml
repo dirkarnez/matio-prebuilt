@@ -64,10 +64,10 @@ jobs:
       #     curl https://github.com/dirkarnez/openssl-prebuilt/releases/download/v3.1.3/openssl-v3.1.3-x86_64-8.1.0-release-posix-seh-rt_v6-rev0.zip -L -O &&^
       #     7z.exe x openssl-v3.1.3-x86_64-8.1.0-release-posix-seh-rt_v6-rev0.zip -o"openssl-v3.1.3-x86_64-8.1.0-release-posix-seh-rt_v6-rev0"
 
-      # - shell: cmd
-      #   run: |
-      #     curl https://github.com/dirkarnez/zlib-prebuilt/releases/download/v1.2.13/zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0.zip -L -O &&^
-      #     7z.exe x zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0.zip -o"zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0"
+      - shell: cmd
+        run: |
+          curl https://github.com/dirkarnez/zlib-prebuilt/releases/download/v1.2.13/zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0.zip -L -O &&^
+          7z.exe x zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0.zip -o"zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0"
           
       # - name: set PATH, check mingw version, cmake generate, build and install
       #   if: ${{ !matrix.compiler.url }}
@@ -112,12 +112,13 @@ jobs:
             -DMATIO_WITH_HDF5=OFF ^
             -DMATIO_WITH_ZLIB=OFF ^
             -DMATIO_MAT73=OFF ^
+            -DZLIB_ROOT="%CD_LINUX%/zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0" ^
+            -DZLIB_USE_STATIC_LIBS=ON ^
             -DCMAKE_INSTALL_PREFIX="cmake-build/${{ env.cmakeInstallationPath }}" -B./cmake-build &&^
             cd cmake-build && ( cmake --build . --config Release && cmake --install .  || type .\CMakeFiles\CMakeError.log )  
  
   # -DOpenSSL_DIR="%CD_LINUX%/openssl-v3.1.3-x86_64-8.1.0-release-posix-seh-rt_v6-rev0" ^
-  # -DZLIB_ROOT="%CD_LINUX%/zlib-v1.2.13-mingw64-x86_64-posix-seh-rev0-8.1.0" ^
-  # -DZLIB_USE_STATIC_LIBS=ON ^
+
   
       - name: Archive Release
         uses: thedoctor0/zip-release@master
